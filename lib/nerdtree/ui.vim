@@ -346,6 +346,9 @@ endfunction
 "Saves the current cursor position in the current buffer and the window
 "scroll position
 function! s:UI.saveScreenState()
+    if exists('w:dontsavescreenstate')
+        return
+    endif
     let win = winnr()
     call g:NERDTree.CursorToTreeWin()
     let self._screenState = {}
