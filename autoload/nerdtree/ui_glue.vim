@@ -247,9 +247,14 @@ function! s:displayHelp()
 endfunction
 
 " FUNCTION: s:findAndRevealPath() {{{1
-function! s:findAndRevealPath()
+function! s:findAndRevealPath(...)
     try
-        let p = g:NERDTreePath.New(expand("%:p"))
+        if len(a:000)
+            echom string(a:000)
+            let p = g:NERDTreePath.New(a:000[0])
+        else
+            let p = g:NERDTreePath.New(expand("%:p"))
+        endif
     catch /^NERDTree.InvalidArgumentsError/
         call nerdtree#echo("no file for the current buffer")
         return
@@ -552,7 +557,7 @@ function! nerdtree#ui_glue#setupCommands()
     command! -n=0 -bar NERDTreeClose :call g:NERDTree.Close()
     command! -n=1 -complete=customlist,nerdtree#completeBookmarks -bar NERDTreeFromBookmark call g:NERDTreeCreator.CreateTabTree('<args>')
     command! -n=0 -bar NERDTreeMirror call g:NERDTreeCreator.CreateMirror()
-    command! -n=0 -bar NERDTreeFind call s:findAndRevealPath()
+    command! -n=? -bar NERDTreeFind call s:findAndRevealPath(<args>)
     command! -n=0 -bar NERDTreeFocus call NERDTreeFocus()
     command! -n=0 -bar NERDTreeCWD call NERDTreeCWD()
 endfunction
