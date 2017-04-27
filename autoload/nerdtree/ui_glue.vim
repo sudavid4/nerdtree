@@ -387,6 +387,8 @@ endfunction
 "this is needed since I cant figure out how to invoke dict functions from a
 "key map
 function! nerdtree#ui_glue#invokeKeyMap(key)
+    " I need this for my `-` map. need to remember the nerdtree to wipeout once I'm done 
+    call RememberNerdToWipe(expand('%'))
     call g:NERDTreeKeyMap.Invoke(a:key)
 endfunction
 
